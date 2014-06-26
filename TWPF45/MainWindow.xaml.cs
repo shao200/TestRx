@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using ReactiveUI;
+using ReactiveUI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,10 @@ namespace TWPF45
 
             //QueryButton
             this.OneWayBind(ViewModel, x => x.QueryCommand, x => x.QueryButton.Command);
+
+
+
+            this.OneWayBind(ViewModel, x => x.IsBusy, x => x.IsBusy.Visibility);
 
         }
 

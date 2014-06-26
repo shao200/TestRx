@@ -22,6 +22,13 @@ namespace TWPF
             }
         }
 
+        bool _IsBusy;
+        public bool IsBusy
+        {
+            get { return _IsBusy; }
+            set { this.RaiseAndSetIfChanged(ref _IsBusy, value); }
+        }
+
         /// <summary>
         /// Gets the command executed when the user clicks the "OK" button.
         /// </summary>
@@ -45,25 +52,30 @@ namespace TWPF
         ObservableAsPropertyHelper<IList<string>> _QueryResults;
         public IList<string> QueryResults { get { return _QueryResults.Value; } }
 
+        bool InputValid(string s)
+        {
+            return !string.IsNullOrEmpty(s) && s.Length >= 3;
+        }
         public MainWindowViewModel()
         {
             dc = new DictServiceSoapClient("DictServiceSoap");
 
             var wordInput = this.WhenAny(x => x.QueryWord, x => x.Value).DistinctUntilChanged();
 
-            _QueryWord = "12";
             //only query if word length larger than 3
             QueryCommand = new ReactiveCommand(
-                wordInput.Select(x => x.Length >= 3)
+                wordInput.Select(InputValid)
                 );
 
             //when user inputed a new word, wait 0.7 sec, and query from internet
             this._QueryResults = wordInput
-                .Where(w=>w.Length>3)
+                .Where(InputValid)
+                .Do(_ => IsBusy = true)
                 .Throttle(TimeSpan.FromSeconds(1))
                 .SelectMany(QueryWords)
                 .ObserveOn(SynchronizationContext.Current) //-
                 //.ObserveOnDispatcher()
+                .Do(_ => IsBusy = false)
                 .ToProperty(this, x => x.QueryResults); ;
 
             //QueryCommand = ReactiveCommand.Create(

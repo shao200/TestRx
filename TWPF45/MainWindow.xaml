@@ -10,8 +10,9 @@
         </Grid.RowDefinitions>
             <StackPanel>
                 <TextBox Name="QueryWord"/>
-                <Button Name="QueryButton" Height="20" Content="Query"/>                
-            </StackPanel>
+                <Button Name="QueryButton"  Content="Query"/>
+            <ProgressBar Name="IsBusy" IsIndeterminate="True"/>
+        </StackPanel>
 
         <ListBox Grid.Row="1" Name="QueryResults"  >
             <ListBox.ItemTemplate>
