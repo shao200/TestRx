@@ -34,7 +34,6 @@ sys$command
 *.jar
 *.cmd
 data
-*.config
 Release
 jslib
 buildlib

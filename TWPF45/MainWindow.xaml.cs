@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using MahApps.Metro.Controls;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace TWPF45
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IViewFor<MainWindowViewModel>
+    public partial class MainWindow : MetroWindow, IViewFor<MainWindowViewModel>
     {
         public MainWindow()
         {
