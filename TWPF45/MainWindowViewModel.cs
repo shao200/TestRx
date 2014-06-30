@@ -8,6 +8,10 @@ using System.Reactive.Linq;
 using TWPF45.Dict;
 using System.Reactive.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Net;
+using fastJSON;
+using System.Windows.Threading;
 
 namespace TWPF
 {
@@ -17,9 +21,29 @@ namespace TWPF
         public string QueryWord
         {
             get { return _QueryWord; }
-            set {
-                this.RaiseAndSetIfChanged(ref _QueryWord, value);
-            }
+            set { this.RaiseAndSetIfChanged(ref _QueryWord, value); }
+        }
+        const string jsonSaveFile = "proxy.json";
+        public int GetCount { get; set; }
+        public Task<List<string>> LoadJsonAsync()
+        {
+            return Task.Factory.StartNew<List<string>>(() =>
+            {
+                List<string> res = null;
+                try
+                {
+                    WebClient wc = new WebClient();
+                    wc.Headers.Add("X-Mashape-Authorization", "rPSxC7K1iPGlbvA4ZgYEy9klJBuEZuYC");
+
+                    var ips = wc.DownloadString("https://webknox-proxies.p.mashape.com/proxies/newMultiple?maxResponseTime=10&batchSize=" + GetCount);
+
+                    res = JSON.ToObject<List<string>>(ips);
+                }
+
+                catch (Exception ex) { return new List<string> { ex.Message, ex.StackTrace }; }
+
+                return res;
+            });
         }
 
         bool _IsBusy;
@@ -34,6 +58,9 @@ namespace TWPF
         /// </summary>
         public ReactiveCommand QueryCommand { get; private set; }
 
+        public ReactiveCommand Fetch { get; private set; }
+        
+
         DictServiceSoapClient dc;
 
         /// <summary>
@@ -43,22 +70,33 @@ namespace TWPF
         /// <returns></returns>
         IObservable<IList<string>> QueryWords(string qw)
         {
+            return LoadJsonAsync().ToObservable();
+
             var ds = from words in dc.MatchInDictAsync("wn", qw, "prefix").ToObservable()
                     from word in words
-                    select word.Word;
+                     select word.Word;
             return ds.ToList();
         }
 
         ObservableAsPropertyHelper<IList<string>> _QueryResults;
         public IList<string> QueryResults { get { return _QueryResults.Value; } }
 
+
+        IList<string> _IPs;
+        public IList<string> IPs { get { return _IPs; } set { this.RaiseAndSetIfChanged(ref _IPs, value); } }
+
+
+
         bool InputValid(string s)
         {
             return !string.IsNullOrEmpty(s) && s.Length >= 3;
         }
+        Dispatcher uiDispatcher;
         public MainWindowViewModel()
         {
+            uiDispatcher=Dispatcher.CurrentDispatcher;
             dc = new DictServiceSoapClient("DictServiceSoap");
+            GetCount = 2;
 
             var wordInput = this.WhenAny(x => x.QueryWord, x => x.Value).DistinctUntilChanged();
 
@@ -67,12 +105,43 @@ namespace TWPF
                 wordInput.Select(InputValid)
                 );
 
+            Fetch = new ReactiveCommand(this.WhenAny(x => x.IsBusy, x => !x.Value));
+            Fetch.Subscribe(_ =>
+                {
+                    IsBusy = true;
+                    Task.Factory.StartNew(() =>
+                    {
+                        Thread.Sleep(2000);
+                        uiDispatcher.BeginInvoke(new Action(() => {
+
+                            IPs = new List<string> { DateTime.Now.ToString(),_.ToString()};
+                            IsBusy = false;
+                        
+                        }));
+
+                    });
+                }
+               
+            );
+
+            //Fetch.Execute
+
+            //var fr = Fetch.Select(_ => QueryWords(string.Empty)).Do(_ => IsBusy = true);
+            //Fetch.CanExecuteObservable
+            //    .Do(_ => IsBusy = true)
+            //    .SelectMany(_ => QueryWords(string.Empty) )
+            //    .ObserveOn(SynchronizationContext.Current) //-
+            //    //.ObserveOnDispatcher()
+            //    .Do(_ => IsBusy = false)
+            //    .ToProperty(this, x => x.QueryResults); ; ;
+
             //when user inputed a new word, wait 0.7 sec, and query from internet
             this._QueryResults = wordInput
                 .Where(InputValid)
                 .Do(_ => IsBusy = true)
                 .Throttle(TimeSpan.FromSeconds(1))
                 .SelectMany(QueryWords)
+
                 .ObserveOn(SynchronizationContext.Current) //-
                 //.ObserveOnDispatcher()
                 .Do(_ => IsBusy = false)

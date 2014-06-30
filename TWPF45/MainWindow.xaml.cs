@@ -33,10 +33,11 @@ namespace TWPF45
             this.Bind(ViewModel, x => x.QueryWord);
 
 
-            this.OneWayBind(ViewModel, x => x.QueryResults, x => x.QueryResults.ItemsSource);
+            this.OneWayBind(ViewModel, x => x.IPs, x => x.QueryResults.ItemsSource);
 
             //QueryButton
             this.OneWayBind(ViewModel, x => x.QueryCommand, x => x.QueryButton.Command);
+            this.BindCommand(ViewModel, x => x.Fetch);
 
 
 
