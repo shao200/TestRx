@@ -3,7 +3,6 @@
 *.png
 Xceed.Wpf.Toolkit
 *.xml
-*.jpg
 dlls
 *.ico
 *.txt

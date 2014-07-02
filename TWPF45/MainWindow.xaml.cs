@@ -29,7 +29,7 @@ namespace TWPF45
             ViewModel = new MainWindowViewModel();
             InitializeComponent();
 
-            //pg1.SelectedObject = ViewModel;
+            pg1.SelectedObject = ViewModel;
 
             this.Bind(ViewModel, x => x.QueryWord);
 
@@ -42,6 +42,11 @@ namespace TWPF45
 
             this.OneWayBind(ViewModel, x => x.IsBusy, x => x.IsBusy.Visibility);
 
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
         }
 
         public MainWindowViewModel ViewModel

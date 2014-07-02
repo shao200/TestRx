@@ -3,42 +3,57 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:TWPF45"  x:Class="TWPF45.MainWindow"
-        Title="MainWindow" Height="612" Width="650">
+        BorderBrush="{DynamicResource AccentColorBrush}"
+        WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="500" Width="902">
     <Grid >
+        <Grid.Background>
+            <ImageBrush Opacity="0.2" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="splash.jpg" />
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="86" />
             <RowDefinition  Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition  Width="1*"/>
-            <ColumnDefinition  Width="2*"/>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="280" />
         </Grid.ColumnDefinitions>
 
-        <!--<xctk:PropertyGrid  Grid.Column="1"  x:Name="pg1" Grid.Row="1"
+
+        <xctk:PropertyGrid
+            Panel.ZIndex="11"
+            Background="Transparent"
+            Width="288"
+            Grid.Column="1"  x:Name="pg1" Grid.Row="1"
                             IsCategorized="False"
                             ShowAdvancedOptions="False"
                             ShowPreview="False"
                             ShowSearchBox="False"
                             ShowSortOptions="False"
-                            ShowTitle="False"                            
-                            />-->
+                            ShowTitle="False" HorizontalAlignment="Right"
+                            ShowSummary="False"
+                            />
 
 
 
-        <StackPanel Grid.ColumnSpan="2">
+        <StackPanel Grid.ColumnSpan="2" Background="Transparent">
             <TextBox x:Name="QueryWord"/>
             <Button x:Name="QueryButton"  Content="Query"/>
             <Button x:Name="Fetch"  Content="Fetch" CommandParameter="{Binding Text, ElementName=QueryWord}"/>
             <ProgressBar x:Name="IsBusy" IsIndeterminate="True"/>
         </StackPanel>
 
-        <ListBox Grid.Row="1" x:Name="QueryResults"  >
+        <ListBox Grid.Row="1" x:Name="QueryResults"  Background="Transparent">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}"  Height="16" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <local:MDraw Grid.Column="1"  Grid.Row="1" />
+        <local:MDraw  Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,40,0,0"/>
     </Grid>
 </controls:MetroWindow>

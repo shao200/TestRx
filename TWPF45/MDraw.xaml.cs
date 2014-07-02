@@ -25,13 +25,26 @@ namespace TWPF45
             InitializeComponent();
         }
 
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            if (e.LeftButton != MouseButtonState.Pressed) return;
+            var pm = Mouse.GetPosition(this);
+            MX = pm.X;
+            MY = pm.Y;
+            this.InvalidateVisual();
+        }
+
+        double MX { get; set; }
+        double MY { get; set; }
         protected override void OnRender(DrawingContext drawingContext)
         {
-            base.OnRender(drawingContext);
+            //base.OnRender(drawingContext);
 
-            Pen pen = new Pen(Brushes.Black, 10);
-            Point pt1 = new Point(10, 10);
-            Point pt2 = new Point(this.ActualWidth, this.ActualHeight);
+        
+            Pen pen = new Pen(Brushes.Aquamarine, 2);
+            Point pt1 = new Point(this.ActualWidth / 2, this.ActualHeight/2);
+            Point pt2 = new Point(MX, MY);
             drawingContext.DrawLine(pen, pt1, pt2);
         }
     }
