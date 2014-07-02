@@ -6,15 +6,18 @@
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
+                      Style="{DynamicResource VSWindowStyleKey}"
         Title="MainWindow" Height="500" Width="902">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid >
-        <Grid.Background>
-            <ImageBrush Opacity="0.2" Stretch="UniformToFill">
-                <ImageBrush.ImageSource>
-                    <BitmapImage UriSource="splash.jpg" />
-                </ImageBrush.ImageSource>
-            </ImageBrush>
-        </Grid.Background>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="86" />
             <RowDefinition  Height="1*" />
