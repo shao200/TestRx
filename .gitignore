@@ -1,7 +1,6 @@
 *.lib
 *.bmp
 *.png
-Xceed.Wpf.Toolkit
 *.xml
 dlls
 *.ico
