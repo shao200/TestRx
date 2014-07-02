@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Net;
 using fastJSON;
 using System.Windows.Threading;
+using System.ComponentModel;
 
 namespace TWPF
 {
@@ -47,10 +48,19 @@ namespace TWPF
         }
 
         bool _IsBusy;
+        [DisplayName("Whether is fetcing IPs now")]
+        [Description("Busy fetcing IPs")]
         public bool IsBusy
         {
-            get { return _IsBusy; }
-            set { this.RaiseAndSetIfChanged(ref _IsBusy, value); }
+            get { 
+                return _IsBusy;
+            }
+            set {
+
+                _IsBusy = value;
+                this.raisePropertyChanged("IsBusy");
+                //this.RaiseAndSetIfChanged(ref _IsBusy, value); 
+            }
         }
 
         /// <summary>
@@ -58,8 +68,7 @@ namespace TWPF
         /// </summary>
         public ReactiveCommand QueryCommand { get; private set; }
 
-        public ReactiveCommand Fetch { get; private set; }
-        
+        public ReactiveCommand Fetch { get; private set; }        
 
         DictServiceSoapClient dc;
 
@@ -78,8 +87,8 @@ namespace TWPF
             return ds.ToList();
         }
 
-        ObservableAsPropertyHelper<IList<string>> _QueryResults;
-        public IList<string> QueryResults { get { return _QueryResults.Value; } }
+        ObservableAsPropertyHelper<List<string>> _QueryResults;
+        public List<string> QueryResults { get { return _QueryResults.Value; } }
 
 
         IList<string> _IPs;
@@ -105,24 +114,59 @@ namespace TWPF
                 wordInput.Select(InputValid)
                 );
 
-            Fetch = new ReactiveCommand(this.WhenAny(x => x.IsBusy, x => !x.Value));
-            Fetch.Subscribe(_ =>
+            
+
+            Fetch = new ReactiveCommand(
+                this.WhenAny(x => x.IsBusy,
+                x =>
                 {
-                    IsBusy = true;
-                    Task.Factory.StartNew(() =>
-                    {
-                        Thread.Sleep(2000);
-                        uiDispatcher.BeginInvoke(new Action(() => {
-
-                            IPs = new List<string> { DateTime.Now.ToString(),_.ToString()};
-                            IsBusy = false;
-                        
-                        }));
-
-                    });
+                    return 
+                        //true;
+                        !x.Value;
                 }
+                ).DistinctUntilChanged()
+                //wordInput.Select(InputValid)
+                );
+            Fetch.Subscribe(o => { IsBusy = true; });
+            var ftu = Fetch.RegisterAsyncFunction(o =>
+            {
+                Thread.Sleep(500);
+                return new List<string> { DateTime.Now.ToString(), o.ToString() };
+            })
+            .ObserveOn(SynchronizationContext.Current)
+            ;
+            //Fetch.
+                
+                
+            //    Subscribe(_ =>
+            //    {
+            //        IsBusy = true;
+            //        Task.Factory.StartNew(() =>
+            //        {
+            //            Thread.Sleep(2000);
+            //            uiDispatcher.BeginInvoke(new Action(() => {
+
+            //                IPs = new List<string> { DateTime.Now.ToString(),_.ToString()};
+            //                IsBusy = false;
+                        
+            //            }));
+
+            //        });
+            //    }
                
-            );
+            //);
+
+            this._QueryResults = new ObservableAsPropertyHelper<List<string>>(ftu, x => {
+
+                if (x == null) return;
+
+                IsBusy = false;
+                
+                raisePropertyChanged("QueryResults");
+
+                //raisePropertyChanged("IsBusy");
+            
+            });
 
             //Fetch.Execute
 
@@ -136,16 +180,16 @@ namespace TWPF
             //    .ToProperty(this, x => x.QueryResults); ; ;
 
             //when user inputed a new word, wait 0.7 sec, and query from internet
-            this._QueryResults = wordInput
-                .Where(InputValid)
-                .Do(_ => IsBusy = true)
-                .Throttle(TimeSpan.FromSeconds(1))
-                .SelectMany(QueryWords)
+            //this._QueryResults = wordInput
+            //    .Where(InputValid)
+            //    .Do(_ => IsBusy = true)
+            //    .Throttle(TimeSpan.FromSeconds(1))
+            //    .SelectMany(QueryWords)
 
-                .ObserveOn(SynchronizationContext.Current) //-
-                //.ObserveOnDispatcher()
-                .Do(_ => IsBusy = false)
-                .ToProperty(this, x => x.QueryResults); ;
+            //    .ObserveOn(SynchronizationContext.Current) //-
+            //    //.ObserveOnDispatcher()
+            //    .Do(_ => IsBusy = false)
+            //    .ToProperty(this, x => x.QueryResults); ;
 
             //QueryCommand = ReactiveCommand.Create(
             //    x =>

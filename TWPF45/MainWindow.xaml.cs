@@ -29,17 +29,16 @@ namespace TWPF45
             ViewModel = new MainWindowViewModel();
             InitializeComponent();
 
+            //pg1.SelectedObject = ViewModel;
 
             this.Bind(ViewModel, x => x.QueryWord);
 
 
-            this.OneWayBind(ViewModel, x => x.IPs, x => x.QueryResults.ItemsSource);
+            this.OneWayBind(ViewModel, x => x.QueryResults, x => x.QueryResults.ItemsSource);
 
             //QueryButton
             this.OneWayBind(ViewModel, x => x.QueryCommand, x => x.QueryButton.Command);
-            this.BindCommand(ViewModel, x => x.Fetch);
-
-
+            this.OneWayBind(ViewModel, x => x.Fetch, x => x.Fetch.Command);
 
             this.OneWayBind(ViewModel, x => x.IsBusy, x => x.IsBusy.Visibility);
 
