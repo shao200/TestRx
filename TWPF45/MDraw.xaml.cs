@@ -39,13 +39,26 @@ namespace TWPF45
             var pm = Mouse.GetPosition(this);
             MX = pm.X;
             MY = pm.Y;
+            var dxp = Math.Abs((MX - Center.X) / Center.X);
+            var dyp = Math.Abs((MY - Center.Y) / Center.Y);
+
+            MagnitudePercent = Math.Max(dxp, dyp);
+
             Notify("MX");
             Notify("MY");
 
+            Notify("MagnitudePercent");
             DrawForce = true;
             this.InvalidateVisual();
         }
 
+        public static readonly DependencyProperty MagnitudePercentProperty =
+    DependencyProperty.Register("MagnitudePercent", typeof(double), typeof(MDraw));
+
+        public double MagnitudePercent {
+            get { return (double)this.GetValue(MagnitudePercentProperty); }
+            set { this.SetValue(MagnitudePercentProperty, value); }
+        }
         public double Magnitude { get; set; }
 
         public double MX { get; set; }

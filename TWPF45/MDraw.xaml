@@ -9,6 +9,7 @@
         <ResourceDictionary>
 
             <SolidColorBrush x:Key="AccentBackgroundBrush" Color="{DynamicResource AccentColor}" Opacity="0.1"/>
+            <SolidColorBrush x:Key="AccentMotorOutputBackgroundBrush" Color="{DynamicResource AccentColor}" Opacity="{Binding MagnitudePercent}"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Canvas Name="layer1">
@@ -24,7 +25,7 @@
             </Rectangle>
         </Canvas>
         <Canvas Name="g3809">
-            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path3789" Fill="{DynamicResource AccentColorBrush4}" Stroke="{DynamicResource AccentColorBrush}">
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Opacity="{Binding MagnitudePercent}" Name="path3789" Fill="{DynamicResource AccentColorBrush4}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
                 </Path.Data>
