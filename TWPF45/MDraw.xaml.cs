@@ -36,36 +36,68 @@ namespace TWPF45
         {
             var res = xv * MDX + yv * MDY;
             if (res < minOpacity) res = minOpacity;
+            else if (res > 0.989) res = 0.99;
             return res;
+        }
+
+        void ProcessMouse(MouseButtonState mbs)
+        {
+            if (mbs == MouseButtonState.Pressed)
+            {
+                var pm = Mouse.GetPosition(this);
+                MX = pm.X;
+                MY = pm.Y;
+                MDX = (MX - Center.X) / Center.X;
+                MDY = (Center.Y - MY) / Center.Y;
+
+                MRHMagnitude = MDot(-1, 1);
+                MRLMagnitude = MDot(-1, -1);
+
+                MLHMagnitude = MDot(1, 1);
+                MLLMagnitude = MDot(1, -1);
+
+                //MagnitudePercent = Math.Max(Math.Abs(MDX), Math.Abs(MDY));
+
+                Notify("MX");
+                Notify("MY");
+                Notify("MDX");
+                Notify("MDY");
+
+                //Notify("MagnitudePercent");
+                DrawForce = true;
+                this.InvalidateVisual();
+            }
+            else
+            {
+                if (DrawForce == true)
+                {
+                    DrawForce = false;
+                    MRHMagnitude =
+                    MRLMagnitude =
+
+                    MLHMagnitude =
+                    MLLMagnitude = minOpacity;
+                    this.InvalidateVisual();
+                }
+            }           
+        }
+
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseUp(e);
+            ProcessMouse(e.LeftButton);
+        }
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+            ProcessMouse(e.LeftButton);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
             DrawForce = false;
-            if (e.LeftButton != MouseButtonState.Pressed) return;
-            var pm = Mouse.GetPosition(this);
-            MX = pm.X;
-            MY = pm.Y;
-            MDX = (MX - Center.X) / Center.X;
-            MDY = (Center.Y - MY) / Center.Y;
-
-            MRHMagnitude = MDot(-1, 1);
-            MRLMagnitude = MDot(-1, -1);
-
-            MLHMagnitude = MDot(1, 1);
-            MLLMagnitude = MDot(1, -1);
-
-            MagnitudePercent = Math.Max(Math.Abs(MDX), Math.Abs(MDY));
-
-            Notify("MX");
-            Notify("MY");
-            Notify("MDX");
-            Notify("MDY");
-
-            //Notify("MagnitudePercent");
-            DrawForce = true;
-            this.InvalidateVisual();
+            ProcessMouse(e.LeftButton);
         }
 
         const double minOpacity = 0.2;

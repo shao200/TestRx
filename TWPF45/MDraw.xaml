@@ -25,7 +25,7 @@
             </Rectangle>
         </Canvas>
         <Canvas Name="g3809">
-            <TextBlock  Panel.ZIndex="22"  Text="{Binding Path=MRHMagnitude,Converter={StaticResource pwfConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}" Margin="20,20,0,0"/>
+            <TextBlock  Panel.ZIndex="22"  Text="{Binding Path=MRHMagnitude,Converter={StaticResource pwfConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}" Margin="18,20,0,0"/>
             <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path3789"  Opacity="{Binding MRHMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
@@ -46,7 +46,7 @@
             </Path>
 
 
-            <TextBlock Text="{Binding Path=MRHMagnitude,Converter={StaticResource pwfConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}"/>
+            <TextBlock Panel.ZIndex="22" Text="{Binding Path=MRLMagnitude,Converter={StaticResource pwfConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}" Margin="18,295,0,0"/>
             <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path37894" Opacity="{Binding MRLMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
@@ -57,7 +57,7 @@
             </Path>
 
 
-            <TextBlock Text="{Binding Path=MRHMagnitude,Converter={StaticResource pwfConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}"/>
+            <TextBlock Panel.ZIndex="22" Text="{Binding Path=MLLMagnitude,Converter={StaticResource pwfConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}" Margin="470,295,0,0"/>
             <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path378940" Opacity="{Binding MLLMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
