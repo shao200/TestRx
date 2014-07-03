@@ -5,12 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Canvas Name="svg2" Width="744" Height="1052">
-        <Canvas.Resources/>
-        <!--Unknown tag: sodipodi:namedview-->
-        <!--Unknown tag: metadata-->
-        <Canvas Name="layer1">
-            <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="3" Canvas.Top="1" Width="742" Height="357" Name="rect2985" Fill="#4A0000FF" StrokeThickness="2" Stroke="#2F000000"/>
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <SolidColorBrush x:Key="AccentBackgroundBrush" Color="{DynamicResource AccentColor}" Opacity="0.1"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Canvas Name="layer1">
+        <Canvas Name="g3009">
+            <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="1" Canvas.Top="1" Width="508" Height="328" Name="rect2985" Fill="{DynamicResource AccentBackgroundBrush}"  />
+             
+            <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="1" Canvas.Top="54" Width="55" Height="275" Name="rect2987" Fill="{DynamicResource AccentColorBrush4}" StrokeThickness="1" Stroke="{DynamicResource AccentColorBrush}">
+            </Rectangle>
+            <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="453" Canvas.Top="54" Width="55" Height="275" Name="rect29871" Fill="{DynamicResource AccentColorBrush4}" StrokeThickness="1" Stroke="{DynamicResource AccentColorBrush}">
+            </Rectangle>
+            <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="1" Canvas.Top="1" Width="507" Height="54" Name="rect3007" Fill="{DynamicResource AccentColorBrush4}" StrokeThickness="1" Stroke="{DynamicResource AccentColorBrush}">
+                
+            </Rectangle>
+        </Canvas>
+        <Canvas Name="g3809">
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path3789" Fill="{DynamicResource AccentColorBrush4}" Stroke="{DynamicResource AccentColorBrush}">
+                <Path.Data>
+                    <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
+                </Path.Data>
+                <Path.RenderTransform>
+                    <TranslateTransform X="1.0714286" Y="0.17857143"/>
+                </Path.RenderTransform>
+            </Path>
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path37897" Fill="{DynamicResource AccentColorBrush4}" Stroke="{DynamicResource AccentColorBrush}">
+                <Path.Data>
+                    <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
+                </Path.Data>
+                <Path.RenderTransform>
+                    <TranslateTransform X="452.98713" Y="-2.5039481e-7"/>
+                </Path.RenderTransform>
+            </Path>
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path37894" Fill="{DynamicResource AccentColorBrush4}" Stroke="{DynamicResource AccentColorBrush}">
+                <Path.Data>
+                    <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
+                </Path.Data>
+                <Path.RenderTransform>
+                    <TranslateTransform X="1.2500005" Y="273.57142"/>
+                </Path.RenderTransform>
+            </Path>
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path378940" Fill="{DynamicResource AccentColorBrush4}" Stroke="{DynamicResource AccentColorBrush}">
+                <Path.Data>
+                    <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
+                </Path.Data>
+                <Path.RenderTransform>
+                    <TranslateTransform X="453.53182" Y="273.9069"/>
+                </Path.RenderTransform>
+            </Path>
         </Canvas>
     </Canvas>
 </UserControl>
