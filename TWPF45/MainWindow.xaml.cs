@@ -26,6 +26,7 @@ namespace TWPF45
     {
         public MainWindow()
         {
+            DataContext =
             ViewModel = new MainWindowViewModel();
             InitializeComponent();
 
@@ -41,6 +42,8 @@ namespace TWPF45
             this.OneWayBind(ViewModel, x => x.Fetch, x => x.Fetch.Command);
 
             this.OneWayBind(ViewModel, x => x.IsBusy, x => x.IsBusy.Visibility);
+
+            //this.OneWayBind(ViewModel, x => x.AccentColors, x => x.AccentMenu);
 
         }
 

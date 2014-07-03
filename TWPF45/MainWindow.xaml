@@ -5,15 +5,29 @@
         xmlns:local="clr-namespace:TWPF45"  x:Class="TWPF45.MainWindow"
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       ResizeMode="CanResizeWithGrip"
-        WindowStartupLocation="CenterScreen"
-                      Style="{DynamicResource VSWindowStyleKey}"
+        WindowStartupLocation="CenterScreen"                      
         Title="MainWindow" Height="500" Width="902">
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+
+            <Ellipse x:Key="AccentMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     Fill="{Binding ColorBrush, Mode=OneWay}" />
+            
+            <Style x:Key="AccentColorMenuItemStyle"
+                   TargetType="{x:Type MenuItem}"
+                   BasedOn="{StaticResource MetroMenuItem}">
+                <Setter Property="Command"
+                        Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="Icon"
+                        Value="{StaticResource AccentMenuIcon}" />
+                <Setter Property="Header"
+                        Value="{Binding Name, Mode=OneWay}" />
+            </Style>
+
+          
         </ResourceDictionary>
     </Window.Resources>
     <Grid >
@@ -26,8 +40,6 @@
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="280" />
         </Grid.ColumnDefinitions>
-
-
         <xctk:PropertyGrid
             Panel.ZIndex="11"
             Background="Transparent"
@@ -45,6 +57,16 @@
 
 
         <StackPanel Grid.ColumnSpan="2" Background="Transparent">
+            <Menu Grid.Row="0"
+                  Margin="5"
+                  VerticalAlignment="Stretch"
+                  HorizontalAlignment="Left">
+               
+                <MenuItem Header="Accent" x:Name="AccentMenu"
+                          ItemsSource="{Binding AccentColors, Mode=OneWay}"
+                          ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" />
+               
+            </Menu>
             <TextBox x:Name="QueryWord"/>
             <Button x:Name="QueryButton"  Content="Query"/>
             <Button x:Name="Fetch"  Content="Fetch" CommandParameter="{Binding Text, ElementName=QueryWord}"/>

@@ -13,11 +13,40 @@ using System.Net;
 using fastJSON;
 using System.Windows.Threading;
 using System.ComponentModel;
+using System.Windows.Media;
+using System.Windows.Input;
+using MahApps.Metro;
+using System.Windows;
+using TWPF45;
 
 namespace TWPF
 {
+
+    public class AccentColorMenuData
+    {
+        public string Name { get; set; }
+        public Brush BorderColorBrush { get; set; }
+        public Brush ColorBrush { get; set; }
+
+        private ICommand changeAccentCommand;
+
+        public ICommand ChangeAccentCommand
+        {
+            get { return this.changeAccentCommand ?? (changeAccentCommand = new SimpleCommand { CanExecuteDelegate = x => true, ExecuteDelegate = x => this.DoChangeTheme(x) }); }
+        }
+
+        protected virtual void DoChangeTheme(object sender)
+        {
+            var theme = ThemeManager.DetectAppStyle(Application.Current);
+            var accent = ThemeManager.GetAccent(this.Name);
+            ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
+        }
+    }
+
     public class MainWindowViewModel : ReactiveObject
     {
+
+        public List<AccentColorMenuData> AccentColors { get; set; }
         private string _QueryWord;
         public string QueryWord
         {
@@ -103,6 +132,11 @@ namespace TWPF
         Dispatcher uiDispatcher;
         public MainWindowViewModel()
         {
+
+            this.AccentColors = ThemeManager.Accents
+                                            .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
+                                            .ToList();
+
             uiDispatcher=Dispatcher.CurrentDispatcher;
             dc = new DictServiceSoapClient("DictServiceSoap");
             GetCount = 2;
