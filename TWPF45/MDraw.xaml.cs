@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,15 @@ namespace TWPF45
     /// <summary>
     /// Interaction logic for MDraw.xaml
     /// </summary>
-    public partial class MDraw : UserControl
+    public partial class MDraw : UserControl ,INotifyPropertyChanged
     {
         public MDraw()
         {
             InitializeComponent();
+
+            Center = new Point(
+                this.rect2985.Width / 2,
+                this.rect2985.Height / 2);
         }
 
         public bool DrawForce { get;private set; }
@@ -34,13 +39,18 @@ namespace TWPF45
             var pm = Mouse.GetPosition(this);
             MX = pm.X;
             MY = pm.Y;
+            Notify("MX");
+            Notify("MY");
 
             DrawForce = true;
             this.InvalidateVisual();
         }
 
-        double MX { get; set; }
-        double MY { get; set; }
+        public double Magnitude { get; set; }
+
+        public double MX { get; set; }
+        public double MY { get; set; }
+        Point Center;
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
@@ -48,9 +58,24 @@ namespace TWPF45
 
             Pen pen = new Pen(
             (SolidColorBrush)FindResource("AccentColorBrush"), 2);
-            Point pt1 = new Point(this.rect2985.Width / 2, this.rect2985.Height / 2);
-            Point pt2 = new Point(MX, MY);
-            drawingContext.DrawLine(pen, pt1, pt2);
+            var ptc = new Point(MX, MY);
+            var ptx = new Point(MX, Center.Y);
+            var pty = new Point(Center.X, MY);
+
+            drawingContext.DrawLine(pen, ptx, Center);
+
+            drawingContext.DrawLine(pen, pty, Center);
+
+            drawingContext.DrawLine(pen, ptc, Center);
+        
         }
+
+        public void Notify(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -30,7 +30,7 @@ namespace TWPF45
             ViewModel = new MainWindowViewModel();
             InitializeComponent();
 
-            pg1.SelectedObject = ViewModel;
+            pg1.SelectedObject = this.smd;
 
             this.Bind(ViewModel, x => x.QueryWord);
 
