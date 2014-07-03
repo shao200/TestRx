@@ -92,6 +92,7 @@
     <Compile Include="MDraw.xaml.cs">
       <DependentUpon>MDraw.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PWRConverter.cs" />
     <Compile Include="Service References\Dict\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

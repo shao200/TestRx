@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TWPF45"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
-
             <SolidColorBrush x:Key="AccentBackgroundBrush" Color="{DynamicResource AccentColor}" Opacity="0.1"/>
-            <SolidColorBrush x:Key="AccentMotorOutputBackgroundBrush" Color="{DynamicResource AccentColor}" Opacity="{Binding MagnitudePercent}"/>
-        </ResourceDictionary>
+            <local:PWRConverter x:Key="pwfConverter"/>
+           </ResourceDictionary>
     </UserControl.Resources>
     <Canvas Name="layer1">
         <Canvas Name="g3009">
@@ -25,6 +25,7 @@
             </Rectangle>
         </Canvas>
         <Canvas Name="g3809">
+            <TextBlock  Panel.ZIndex="22"  Text="{Binding Path=MRHMagnitude,Converter={StaticResource pwfConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}" Margin="20,20,0,0"/>
             <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path3789"  Opacity="{Binding MRHMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
@@ -33,6 +34,8 @@
                     <TranslateTransform X="1.0714286" Y="0.17857143"/>
                 </Path.RenderTransform>
             </Path>
+
+            <TextBlock Panel.ZIndex="22" Text="{Binding Path=MLHMagnitude,Converter={StaticResource pwfConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}" Margin="470,20,0,0"/>
             <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path37897" Opacity="{Binding MLHMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
@@ -41,6 +44,9 @@
                     <TranslateTransform X="452.98713" Y="-2.5039481e-7"/>
                 </Path.RenderTransform>
             </Path>
+
+
+            <TextBlock Text="{Binding Path=MRHMagnitude,Converter={StaticResource pwfConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}"/>
             <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path37894" Opacity="{Binding MRLMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
@@ -49,6 +55,9 @@
                     <TranslateTransform X="1.2500005" Y="273.57142"/>
                 </Path.RenderTransform>
             </Path>
+
+
+            <TextBlock Text="{Binding Path=MRHMagnitude,Converter={StaticResource pwfConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}"/>
             <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path378940" Opacity="{Binding MLLMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
