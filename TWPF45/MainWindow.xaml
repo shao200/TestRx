@@ -80,6 +80,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <local:MDraw  Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,40,0,0"/>
+        <local:MDraw  Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" />
     </Grid>
 </controls:MetroWindow>
