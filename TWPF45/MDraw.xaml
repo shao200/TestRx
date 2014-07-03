@@ -25,7 +25,7 @@
             </Rectangle>
         </Canvas>
         <Canvas Name="g3809">
-            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Opacity="{Binding MagnitudePercent}" Name="path3789" Fill="{DynamicResource AccentColorBrush4}" Stroke="{DynamicResource AccentColorBrush}">
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path3789"  Opacity="{Binding MRHMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
                 </Path.Data>
@@ -33,7 +33,7 @@
                     <TranslateTransform X="1.0714286" Y="0.17857143"/>
                 </Path.RenderTransform>
             </Path>
-            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path37897" Fill="{DynamicResource AccentColorBrush4}" Stroke="{DynamicResource AccentColorBrush}">
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path37897" Opacity="{Binding MLHMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
                 </Path.Data>
@@ -41,7 +41,7 @@
                     <TranslateTransform X="452.98713" Y="-2.5039481e-7"/>
                 </Path.RenderTransform>
             </Path>
-            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path37894" Fill="{DynamicResource AccentColorBrush4}" Stroke="{DynamicResource AccentColorBrush}">
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path37894" Opacity="{Binding MRLMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
                 </Path.Data>
@@ -49,7 +49,7 @@
                     <TranslateTransform X="1.2500005" Y="273.57142"/>
                 </Path.RenderTransform>
             </Path>
-            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path378940" Fill="{DynamicResource AccentColorBrush4}" Stroke="{DynamicResource AccentColorBrush}">
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path378940" Opacity="{Binding MLLMagnitude}" Fill="{DynamicResource HighlightBrush}" Stroke="{DynamicResource AccentColorBrush}">
                 <Path.Data>
                     <PathGeometry Figures="m 53.214285 28.076468 a 26.071428 26.071428 0 1 1 -52.1428567 0 26.071428 26.071428 0 1 1 52.1428567 0 z" FillRule="NonZero"/>
                 </Path.Data>

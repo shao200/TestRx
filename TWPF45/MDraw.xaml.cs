@@ -24,13 +24,21 @@ namespace TWPF45
         public MDraw()
         {
             InitializeComponent();
-
+            g3809.DataContext = this;
             Center = new Point(
                 this.rect2985.Width / 2,
                 this.rect2985.Height / 2);
         }
 
         public bool DrawForce { get;private set; }
+
+        double MDot(double xv, double yv)
+        {
+            var res = xv * MDX + yv * MDY;
+            if (res < minOpacity) res = minOpacity;
+            return res;
+        }
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -39,28 +47,98 @@ namespace TWPF45
             var pm = Mouse.GetPosition(this);
             MX = pm.X;
             MY = pm.Y;
-            var dxp = Math.Abs((MX - Center.X) / Center.X);
-            var dyp = Math.Abs((MY - Center.Y) / Center.Y);
+            MDX = (MX - Center.X) / Center.X;
+            MDY = (Center.Y - MY) / Center.Y;
 
-            MagnitudePercent = Math.Max(dxp, dyp);
+            MRHMagnitude = MDot(-1, 1);
+            MRLMagnitude = MDot(-1, -1);
+
+            MLHMagnitude = MDot(1, 1);
+            MLLMagnitude = MDot(1, -1);
+
+            MagnitudePercent = Math.Max(Math.Abs(MDX), Math.Abs(MDY));
 
             Notify("MX");
             Notify("MY");
+            Notify("MDX");
+            Notify("MDY");
 
-            Notify("MagnitudePercent");
+            //Notify("MagnitudePercent");
             DrawForce = true;
             this.InvalidateVisual();
         }
 
+        const double minOpacity = 0.2;
+
         public static readonly DependencyProperty MagnitudePercentProperty =
-    DependencyProperty.Register("MagnitudePercent", typeof(double), typeof(MDraw));
+    DependencyProperty.Register("MagnitudePercent", typeof(double), typeof(MDraw), new FrameworkPropertyMetadata(minOpacity, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public double MagnitudePercent {
             get { return (double)this.GetValue(MagnitudePercentProperty); }
             set { this.SetValue(MagnitudePercentProperty, value); }
         }
+
+        /// <summary>
+        /// Right High Channel
+        /// </summary>
+        public static readonly DependencyProperty MRHMagnitudeProperty =
+    DependencyProperty.Register("MRHMagnitude", typeof(
+double), typeof(MDraw), new FrameworkPropertyMetadata(minOpacity, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public double MRHMagnitude
+        {
+            get { return (double)this.GetValue(MRHMagnitudeProperty); }
+            set { this.SetValue(MRHMagnitudeProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Right Low Channel
+        /// </summary>
+        public static readonly DependencyProperty MRLMagnitudeProperty =
+    DependencyProperty.Register("MRLMagnitude", typeof(
+double), typeof(MDraw), new FrameworkPropertyMetadata(minOpacity, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public double MRLMagnitude
+        {
+            get { return (double)this.GetValue(MRLMagnitudeProperty); }
+            set { this.SetValue(MRLMagnitudeProperty, value); }
+        }
+
+        /// <summary>
+        /// Left High Channel
+        /// </summary>
+        public static readonly DependencyProperty MLHMagnitudeProperty =
+    DependencyProperty.Register("MLHMagnitude", typeof(
+double), typeof(MDraw), new FrameworkPropertyMetadata(minOpacity, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public double MLHMagnitude
+        {
+            get { return (double)this.GetValue(MLHMagnitudeProperty); }
+            set { this.SetValue(MLHMagnitudeProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Left Low Channel
+        /// </summary>
+        public static readonly DependencyProperty MLLMagnitudeProperty =
+    DependencyProperty.Register("MLLMagnitude", typeof(
+double), typeof(MDraw), new FrameworkPropertyMetadata(minOpacity, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public double MLLMagnitude
+        {
+            get { return (double)this.GetValue(MLLMagnitudeProperty); }
+            set { this.SetValue(MLLMagnitudeProperty, value); }
+        }
+
+
         public double Magnitude { get; set; }
 
+
+
+        public double MDX { get; set; }
+        public double MDY { get; set; }
         public double MX { get; set; }
         public double MY { get; set; }
         Point Center;
